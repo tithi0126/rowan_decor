@@ -1,6 +1,11 @@
 <?php
 include "header.php";
 
+$stmt_slist = $obj->con1->prepare("select * from state");
+$stmt_slist->execute();
+$res = $stmt_slist->get_result();
+$stmt_slist->close();
+
 if (isset($_COOKIE['edit_id'])) {
 	$mode = 'edit';
 	$editId = $_COOKIE['edit_id'];
@@ -108,11 +113,7 @@ if(isset($_REQUEST['btnupdate']))
 							<select name="state" id="state" class="form-control" required>
 								<option value="">Select State</option>
 								<?php   
-								$stmt = $obj->con1->prepare("select * from state");
-								$stmt->execute();
-								$data = $stmt->get_result()->fetch_assoc();
-								$stmt->close();
-								while($state=mysqli_fetch_array($data)){
+								while($state=mysqli_fetch_array($res)){
 									?>
 									<option value="<?php echo $state["state_id"] ?>"><?php echo $state["state_name"] ?></option>
 									<?php
