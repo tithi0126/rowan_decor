@@ -1,0 +1,2 @@
+[27-Sep-2017 10:22:28 UTC] PHP Fatal error:  Call to a member function get() on null in /home/yummyc5/public_html/Mobile_Services/slimAPP/src/routes.php on line 4
+[27-Sep-2017 10:22:30 UTC] PHP Fatal error:  Call to a member function get() on null in /home/yummyc5/public_html/Mobile_Services/slimAPP/src/routes.php on line 4
