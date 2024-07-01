@@ -5,7 +5,7 @@ include "header.php";
 if (isset($_COOKIE['edit_id'])) {
 	$mode = 'edit';
 	$editId = $_COOKIE['edit_id'];
-	$stmt = $obj->con1->prepare("select * from units where id=?");
+	$stmt = $obj->con1->prepare("select * from category where id=?");
 	$stmt->bind_param('i', $editId);
 	$stmt->execute();
 	$data = $stmt->get_result()->fetch_assoc();
@@ -15,7 +15,7 @@ if (isset($_COOKIE['edit_id'])) {
 if (isset($_COOKIE['view_id'])) {
 	$mode = 'view';
 	$viewId = $_COOKIE['view_id'];
-	$stmt = $obj->con1->prepare("select * from units where id=?");
+	$stmt = $obj->con1->prepare("select * from category where id=?");
 	$stmt->bind_param('i', $viewId);
 	$stmt->execute();
 	$data = $stmt->get_result()->fetch_assoc();
@@ -26,14 +26,14 @@ if (isset($_COOKIE['view_id'])) {
 // insert data
 if(isset($_REQUEST['btnsubmit']))
 {
-	$unit_name = $_REQUEST['unit_name'];
-    $abbriviation = $_REQUEST['abbriviation'];
+	$name = $_REQUEST['name'];
 	$status = $_REQUEST['status'];
+    echo $status;
 
 	try
 	{
-		$stmt = $obj->con1->prepare("INSERT INTO `units`(`unit_name`,`abbriviation`,`status`) VALUES (?,?,?)");
-		$stmt->bind_param("sss",$unit_name,$abbriviation,$status);
+		$stmt = $obj->con1->prepare("INSERT INTO `category`(`name`,`status`) VALUES (?,?)");
+		$stmt->bind_param("ss",$name,$status);
 		$Resp=$stmt->execute();
 		if(!$Resp)
 		{
@@ -46,30 +46,29 @@ if(isset($_REQUEST['btnsubmit']))
 	}
 
 
-	if($Resp)
-	{
-		setcookie("msg", "data",time()+3600,"/");
-		header("location:units.php");
-	}
-	else
-	{
-		setcookie("msg", "fail",time()+3600,"/");
-		header("location:units.php");
-	}
+	// if($Resp)
+	// {
+	// 	setcookie("msg", "data",time()+3600,"/");
+	// 	header("location:category.php");
+	// }
+	// else
+	// {
+	// 	setcookie("msg", "fail",time()+3600,"/");
+	// 	header("location:category.php");
+	// }
 }
 
 if(isset($_REQUEST['btnupdate']))
 {
-	$unit_name = $_REQUEST['unit_name'];
-    $abbriviation = $_REQUEST['abbriviation'];
+	$name = $_REQUEST['name'];
 	$status = $_REQUEST['status'];
 	$e_id=$_COOKIE['edit_id'];
 	
 	try
 	{
-        // echo"UPDATE units SET `unit_name`=$unit_name, `abbriviation`=$abbriviation, `status`=$status where id=$e_id";
-		$stmt = $obj->con1->prepare("UPDATE units SET `unit_name`=?, `abbriviation`=?, `status`=? where id=?");
-		$stmt->bind_param("sssi",$unit_name,$abbriviation,$status,$e_id);
+        // echo"UPDATE category SET `category`=$category, `abbriviation`=$abbriviation, `status`=$status where id=$e_id";
+		$stmt = $obj->con1->prepare("UPDATE category SET `name`=?, `status`=? where id=?");
+		$stmt->bind_param("ssi",$name,$status,$e_id);
 		$Resp=$stmt->execute();
 		if(!$Resp)
 		{
@@ -85,12 +84,12 @@ if(isset($_REQUEST['btnupdate']))
 	if($Resp)
 	{
 		setcookie("msg", "update",time()+3600,"/");
-		header("location:units.php");
+		header("location:category.php");
 	}
 	else
 	{
 		setcookie("msg", "fail",time()+3600,"/");
-		 header("location:units.php");
+		 header("location:category.php");
 	}
 }
 ?>
@@ -98,7 +97,7 @@ if(isset($_REQUEST['btnupdate']))
 	<div class="col-xl">
 		<div class="card">
 			<div class="card-header d-flex justify-content-between align-items-center">
-				<h5 class="mb-0"> <?php echo (isset($mode)) ? (($mode == 'view') ? 'View' : 'Edit') : 'Add' ?> Units</h5>
+				<h5 class="mb-0"> <?php echo (isset($mode)) ? (($mode == 'view') ? 'View' : 'Edit') : 'Add' ?> Category</h5>
 
 			</div>
 			<div class="card-body">
@@ -106,13 +105,8 @@ if(isset($_REQUEST['btnupdate']))
 
 					<div class="row g-2">
 						<div class="col mb-3">
-							<label class="form-label" for="basic-default-fullname">Unit Name</label>
-							<input type="text" class="form-control" name="unit_name" id="unit_name" value="<?php echo (isset($mode)) ? $data['unit_name'] : '' ?>"
-                            <?php echo isset($mode) && $mode == 'view' ? 'readonly' : '' ?> required />
-						</div>
-                        <div class="col mb-3">
-							<label class="form-label" for="basic-default-fullname">Abbriviation</label>
-							<input type="text" class="form-control" name="abbriviation" id="abbriviatione"  value="<?php echo (isset($mode)) ? $data['abbriviation'] : '' ?>"
+							<label class="form-label" for="basic-default-fullname">Category Name</label>
+							<input type="text" class="form-control" name="name" id="name" value="<?php echo (isset($mode)) ? $data['name'] : '' ?>"
                             <?php echo isset($mode) && $mode == 'view' ? 'readonly' : '' ?> required />
 						</div>
 					</div>
@@ -146,7 +140,7 @@ if(isset($_REQUEST['btnupdate']))
 	function go_back() {
     eraseCookie("edit_id");
     eraseCookie("view_id");
-		window.location = "units.php";
+		window.location = "category.php";
 	}
 </script>
 <?php

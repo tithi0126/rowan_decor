@@ -31,13 +31,16 @@ if (isset($_COOKIE['view_id'])) {
 if(isset($_REQUEST['btnsubmit']))
 {
 	$state_id = $_REQUEST['state'];
-	$city_name = $_REQUEST['city_name'];
+	$ctnm = $_REQUEST['ctnm'];
 	$status = $_REQUEST['status'];
 
 	try
 	{
-		$stmt = $obj->con1->prepare("INSERT INTO `city`(`city_name`,`state`,`status`) VALUES (?,?,?)");
-		$stmt->bind_param("sis",$city_name,$state_id,$status);
+
+
+		// SELECT c1.*, s1.name as 'state_name' FROM `city` c1 , `state` s1 WHERE c1.state_id=s1.id AND c1.status='Enable'
+		$stmt = $obj->con1->prepare("INSERT INTO `city`(`ctnm`,`state`,`status`) VALUES (?,?,?)");
+		$stmt->bind_param("sis",$ctnm,$state_id,$status);
 		$Resp=$stmt->execute();
 		if(!$Resp)
 		{
@@ -65,14 +68,14 @@ if(isset($_REQUEST['btnsubmit']))
 if(isset($_REQUEST['btnupdate']))
 {
 	$state_id = $_REQUEST['state'];
-	$city_name = $_REQUEST['city_name'];
+	$ctnm = $_REQUEST['ctnm'];
 	$status = $_REQUEST['status'];
 	$id=$_REQUEST['ttId'];
 	$action='updated';
 	try
 	{
-		$stmt = $obj->con1->prepare("update city set city_name=?, state=?, status=?,action=? where city_id=?");
-		$stmt->bind_param("sissi", $city_name,$state_id,$status,$action,$id);
+		$stmt = $obj->con1->prepare("update city set ctnm=?, state=?, status=?,action=? where city_id=?");
+		$stmt->bind_param("sissi", $ctnm,$state_id,$status,$action,$id);
 		$Resp=$stmt->execute();
 		if(!$Resp)
 		{
@@ -125,7 +128,7 @@ if(isset($_REQUEST['btnupdate']))
 
 						<div class="col mb-3">
 							<label class="form-label" for="basic-default-fullname">City Name</label>
-							<input type="text" class="form-control" name="city_name" id="city_name" required />
+							<input type="text" class="form-control" name="ctnm" id="ctnm" required />
 						</div>
 					</div>
 
