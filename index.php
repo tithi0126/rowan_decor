@@ -12,20 +12,20 @@ if(isset($_REQUEST["login"])){
 			$pa = $_REQUEST["password"];
 			
      
-			$qr = $obj->con1->prepare("select id,userid,password,name,designation from admin where userid=? and binary(password) =?");
+			$qr = $obj->con1->prepare("select id,password,username from admin where username=? and binary(password) =?");
 			$qr->bind_param("ss",$ui,$pa);
 			$qr->execute();
 			$result = $qr->get_result();
 			$qr->close();
 			$row=mysqli_fetch_array($result);
 			
-			if($row["userid"]==$ui)
+			if($row["username"]==$ui)
 			{
         $_SESSION["userlogin"]="true";
 				$_SESSION["id"]=$row["id"];
-        $_SESSION["userid"]=$ui;
+        // $_SESSION["userid"]=$ui;
         $_SESSION["username"]=$row["name"];
-        $_SESSION["designation"]=$row["designation"];
+        // $_SESSION["designation"]=$row["designation"];
 				header("location:home.php");
 			}
 			else

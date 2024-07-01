@@ -1,44 +1,36 @@
-<?php 
+<?php
 //ob_start();
 include ("db_connect.php");
-$obj=new DB_connect();
+$obj = new DB_connect();
 date_default_timezone_set("Asia/Kolkata");
 error_reporting(E_ALL);
 
 session_start();
 
 
-if(!isset($_SESSION["userlogin"]) )
-{
-    header("location:index.php");
-}
+if (!isset($_SESSION["userlogin"])) {
+  header("location:index.php");
+  }
 
 
-$adminmenu=array("customer_reg.php","post.php","send_notification.php","privacy_policy.php","terms.php","customer_address.php","assign_module.php","page.php","designation.php","users.php","holiday.php","info.php","config.php","mail_settings.php","priority.php");
-$location=array("state.php","city.php","zone.php","area.php");
-$delivery=array("deliveryboy_reg.php","delivery_settings.php","collection_time.php");
-$coupon=array("coupon.php","coupon_counter.php");
-$mail=array("mail_type.php","mail_type_tariff.php");
-$review_feedback=array("post_review.php","customer_feedback.php");
-$reportmenu=array("customer_report.php","cust_report.php","delivery_boy_report.php");
+$adminmenu = array("customer_reg.php", "post.php", "send_notification.php", "privacy_policy.php", "terms.php", "customer_address.php", "assign_module.php", "page.php", "designation.php", "users.php", "holiday.php", "info.php", "config.php", "mail_settings.php", "priority.php");
+$location = array("state.php", "city.php", "zone.php", "area.php");
+$delivery = array("deliveryboy_reg.php", "delivery_settings.php", "collection_time.php");
+$coupon = array("coupon.php", "coupon_counter.php");
+$mail = array("mail_type.php", "mail_type_tariff.php");
+$review_feedback = array("post_review.php", "customer_feedback.php");
+$reportmenu = array("customer_report.php", "cust_report.php", "delivery_boy_report.php");
 $page_name = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="assets/"
-  data-template="vertical-menu-template-free"
->
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="assets/"
+  data-template="vertical-menu-template-free">
+
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Dashboard | Rowan Decor</title>
 
@@ -52,8 +44,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="assets/vendor/fonts/boxicons.css" />
@@ -66,7 +57,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    
+
     <link rel="stylesheet" href="assets/vendor/libs/typeahead-js/typeahead.css" />
     <link rel="stylesheet" href="assets/vendor/libs/apex-charts/apex-charts.css" />
 
@@ -79,7 +70,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="assets/vendor/libs/quill/typography.css" />
     <link rel="stylesheet" href="assets/vendor/libs/quill/katex.css" />
     <link rel="stylesheet" href="assets/vendor/libs/quill/editor.css" />
-     
+
     <!-- Row Group CSS -->
     <!-- <link rel="stylesheet" href="assets/vendor/datatables-rowgroup-bs5/rowgroup.bootstrap5.css"> -->
     <!-- Page CSS -->
@@ -94,199 +85,190 @@ $page_name = basename($_SERVER['PHP_SELF']);
     <!-- build:js assets/vendor/js/core.js -->
     <script src="assets/vendor/libs/jquery/jquery.js"></script>
     <script type="text/javascript">
-        function createCookie(name, value, days) {
-          var expires;
-          if (days) {
-              var date = new Date();
-              date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-              expires = "; expires=" + date.toGMTString();
-          } else {
-              expires = "";
-          }
-          document.cookie = (name) + "=" + String(value) + expires + ";path=/ ";
+      function createCookie(name, value, days) {
+        var expires;
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          expires = "; expires=" + date.toGMTString();
+        } else {
+          expires = "";
+        }
+        document.cookie = (name) + "=" + String(value) + expires + ";path=/ ";
 
       }
 
       function readCookie(name) {
-          var nameEQ = (name) + "=";
-          var ca = document.cookie.split(';');
-          for (var i = 0; i < ca.length; i++) {
-              var c = ca[i];
-              while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-              if (c.indexOf(nameEQ) === 0) return (c.substring(nameEQ.length, c.length));
-          }
-          return null;
+        var nameEQ = (name) + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return (c.substring(nameEQ.length, c.length));
+        }
+        return null;
       }
 
       function eraseCookie(name) {
-          createCookie(name, "", -1);
+        createCookie(name, "", -1);
       }
-      function get_dashboard_data(date)
-      {
+      function get_dashboard_data(date) {
         createCookie("dash_date", date, 1);
-       
-        document.getElementById("dashboard_frm").submit(); 
+
+        document.getElementById("dashboard_frm").submit();
       }
 
-      $(function() {
-     setInterval("get_notification()", 10000);
+      $(function () {
+        setInterval("get_notification()", 10000);
 
-  });
+      });
 
 
-  function get_notification() {
+      function get_notification() {
 
-      $.ajax({
+        $.ajax({
           async: true,
           url: 'ajaxdata.php?action=get_notification',
           type: 'POST',
           data: "",
 
           success: function (data) {
-             // console.log(data);
+            // console.log(data);
 
-              var resp=data.split("@@@@");
-              $('#notification_list').html('');
-              $('#notification_list').append(resp[0]);
-            
-              $('#noti_count').html('');
+            var resp = data.split("@@@@");
+            $('#notification_list').html('');
+            $('#notification_list').append(resp[0]);
 
-              //if(resp[1]>0) {
-                  
-                  $("#noti_count").addClass("badge-notifications");
-                  $('#noti_count').append(resp[1]);
-                  $('#notif_header').show();
-                  if(resp[2]==1)
-                  {
-                    playSound();
-                  }
-                  
-                  
-              /*}
-              else
-              {     
-                  $('#noti_count').removeClass('badge-notifications');
+            $('#noti_count').html('');
 
-                   $('#noti_count').append('');
-                   $('#notification_list').hide();
-                   $('#notif_header').hide();
-                   
-              }*/
+            //if(resp[1]>0) {
+
+            $("#noti_count").addClass("badge-notifications");
+            $('#noti_count').append(resp[1]);
+            $('#notif_header').show();
+            if (resp[2] == 1) {
+              playSound();
+            }
+
+
+            /*}
+            else
+            {     
+                $('#noti_count').removeClass('badge-notifications');
+
+                 $('#noti_count').append('');
+                 $('#notification_list').hide();
+                 $('#notif_header').hide();
+                 
+            }*/
           }
 
-      });
-  }
-  function removeNotification(id,typ){
+        });
+      }
+      function removeNotification(id, typ) {
 
-      $.ajax({
+        $.ajax({
           async: true,
           type: "GET",
           url: "ajaxdata.php?action=removenotification",
-          data:"id="+id+"&type="+typ,
+          data: "id=" + id + "&type=" + typ,
           async: true,
           cache: false,
-          timeout:50000,
+          timeout: 50000,
 
-          success: function(data){
-            
-            if(typ=="customer_reg")
-            {
-              createCookie("cust_id",data,1);
+          success: function (data) {
+
+            if (typ == "customer_reg") {
+              createCookie("cust_id", data, 1);
               window.open('cust_report_detail.php', '_blank');
             }
-            else if(typ=="delivery_reg")
-            {
-              createCookie("deli_boy_id",data,1);
+            else if (typ == "delivery_reg") {
+              createCookie("deli_boy_id", data, 1);
               window.open('deliveryboy_report_detail.php', '_blank');
             }
-            else if(typ=="post_accepted")
-            {
+            else if (typ == "post_accepted") {
               //window.location = "post.php";
-              createCookie("post_id",data,1);
+              createCookie("post_id", data, 1);
               window.open('customer_report_detail.php', '_blank');
             }
-            else if(typ=="post_dispatched")
-            {
+            else if (typ == "post_dispatched") {
               //window.location = "post.php";
-              createCookie("post_id",data,1);
+              createCookie("post_id", data, 1);
               window.open('customer_report_detail.php', '_blank');
             }
-            else if(typ=="post_rejected")
-            {
+            else if (typ == "post_rejected") {
               //window.location = "post.php";
-              createCookie("post_id",data,1);
+              createCookie("post_id", data, 1);
               window.open('customer_report_detail.php', '_blank');
             }
-            else
-            {
+            else {
               //window.location = "post.php";
-              createCookie("post_id",data,1);
+              createCookie("post_id", data, 1);
               window.open('customer_report_detail.php', '_blank');
             }
-            
+
 
           }
-      });
-  }
-  function playSound(){
+        });
+      }
+      function playSound() {
 
-      $.ajax({
+        $.ajax({
           async: true,
           url: 'ajaxdata.php?action=get_Playnotification',
           type: 'POST',
           data: "",
 
           success: function (data) {
-              // console.log(data);
+            // console.log(data);
 
-              var resp=data.split("@@@@");
+            var resp = data.split("@@@@");
 
-              if(resp[0]>0) {
+            if (resp[0] > 0) {
 
-                  var mp3Source = '<source src="notif_sound.wav" type="audio/mpeg">';
-                  document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source +  '</audio>';
-                  removeplaysound(resp[1]);
-              }
+              var mp3Source = '<source src="notif_sound.wav" type="audio/mpeg">';
+              document.getElementById("sound").innerHTML = '<audio autoplay="autoplay">' + mp3Source + '</audio>';
+              removeplaysound(resp[1]);
+            }
           }
 
-      });
+        });
 
-  }
+      }
 
-  function removeplaysound(ids) {
+      function removeplaysound(ids) {
 
-      $.ajax({
+        $.ajax({
           async: true,
           type: "GET",
           url: "ajaxdata.php?action=removeplaysound",
-          data:"id="+ids,
+          data: "id=" + ids,
           async: true,
           cache: false,
-          timeout:50000,
+          timeout: 50000,
 
-      });
+        });
 
-  }
-  function mark_read_all()
-  {
-    $.ajax({
+      }
+      function mark_read_all() {
+        $.ajax({
           async: true,
           type: "GET",
           url: "ajaxdata.php?action=mark_read_all",
-          data:"",
+          data: "",
           async: true,
           cache: false,
-          timeout:50000,
+          timeout: 50000,
           success: function (data) {
             $('#notif_header').hide();
             $('#notification_list').html('');
             $('#noti_count').html('');
           }
 
-      });
-  }
+        });
+      }
     </script>
-  
+
   </head>
 
   <body>
@@ -298,7 +280,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="home.php" class="app-brand-link">
-              
+
               <span class="app-brand-text demo menu-text fw-bolder ms-2">Rowan Decor</span>
             </a>
 
@@ -322,9 +304,9 @@ $page_name = basename($_SERVER['PHP_SELF']);
             <!-- Forms & Tables -->
             <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Masters</span></li> -->
             <!-- Forms -->
-            
 
-            <li class="menu-item <?php echo in_array(basename($_SERVER["PHP_SELF"]),$adminmenu)?"active open":"" ?> ">
+
+            <li class="menu-item <?php echo in_array(basename($_SERVER["PHP_SELF"]), $adminmenu) ? "active open" : "" ?> ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-cog"></i>
                 <div data-i18n="Form Elements">Admin Controls</div>
@@ -332,241 +314,243 @@ $page_name = basename($_SERVER['PHP_SELF']);
 
               <ul class="menu-sub">
 
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="post.php"?"active":"" ?>">
-                  <a href="post.php" class="menu-link">
-                  <div data-i18n="course">Post Orders</div>
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "branch.php" ? "active" : "" ?>">
+                  <a href="branch.php" class="menu-link">
+                    <div data-i18n="course">Branch</div>
                   </a>
                 </li>
 
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="customer_reg.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "customer_reg.php" ? "active" : "" ?>">
                   <a href="customer_reg.php" class="menu-link">
-                  <div data-i18n="course">Customer Registration</div>
+                    <div data-i18n="course">Customer Registration</div>
                   </a>
                 </li>
-                 
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="send_notification.php"?"active":"" ?>">
+
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "send_notification.php" ? "active" : "" ?>">
                   <a href="send_notification.php" class="menu-link">
-                  <div data-i18n="course">Send Notifications</div>
+                    <div data-i18n="course">Send Notifications</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="users.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "users.php" ? "active" : "" ?>">
                   <a href="users.php" class="menu-link">
-                  <div data-i18n="course">User</div>
+                    <div data-i18n="course">User</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="page.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "page.php" ? "active" : "" ?>">
                   <a href="page.php" class="menu-link">
-                  <div data-i18n="course">Pages</div>
+                    <div data-i18n="course">Pages</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="designation.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "designation.php" ? "active" : "" ?>">
                   <a href="designation.php" class="menu-link">
-                  <div data-i18n="course">Designation</div>
+                    <div data-i18n="course">Designation</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="assign_module.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "assign_module.php" ? "active" : "" ?>">
                   <a href="assign_module.php" class="menu-link">
-                  <div data-i18n="course">Assign Module</div>
+                    <div data-i18n="course">Assign Module</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="holiday.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "holiday.php" ? "active" : "" ?>">
                   <a href="holiday.php" class="menu-link">
-                  <div data-i18n="course">Holiday</div>
+                    <div data-i18n="course">Holiday</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="info.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "info.php" ? "active" : "" ?>">
                   <a href="info.php" class="menu-link">
-                  <div data-i18n="course">Info</div>
+                    <div data-i18n="course">Info</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="config.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "config.php" ? "active" : "" ?>">
                   <a href="config.php" class="menu-link">
-                  <div data-i18n="course">Configuration</div>
+                    <div data-i18n="course">Configuration</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="priority.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "priority.php" ? "active" : "" ?>">
                   <a href="priority.php" class="menu-link">
-                  <div data-i18n="course">Priority</div>
+                    <div data-i18n="course">Priority</div>
                   </a>
                 </li>
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="mail_settings.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "mail_settings.php" ? "active" : "" ?>">
                   <a href="mail_settings.php" class="menu-link">
-                  <div data-i18n="course">Mail settings</div>
+                    <div data-i18n="course">Mail settings</div>
                   </a>
                 </li>
 
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="privacy_policy.php"?"active":"" ?>">
-                <a href="privacy_policy.php" class="menu-link">
-                <div data-i18n="course">Privacy Policy</div>
-                </a>
-              </li>
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "privacy_policy.php" ? "active" : "" ?>">
+                  <a href="privacy_policy.php" class="menu-link">
+                    <div data-i18n="course">Privacy Policy</div>
+                  </a>
+                </li>
 
-              <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="terms.php"?"active":"" ?>">
-                <a href="terms.php" class="menu-link">
-                <div data-i18n="course">Terms & Conditions</div>
-                </a>
-              </li>
- 
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "terms.php" ? "active" : "" ?>">
+                  <a href="terms.php" class="menu-link">
+                    <div data-i18n="course">Terms & Conditions</div>
+                  </a>
+                </li>
+
               </ul>
             </li>
 
-            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]),$location)?"active open":"" ?> ">
+            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]), $location) ? "active open" : "" ?> ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-current-location"></i>
                 <div data-i18n="Form Elements">Location Settings</div>
               </a>
               <ul class="menu-sub">
-                
-                
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="state.php"?"active":"" ?>">
-                    <a href="state.php" class="menu-link">
+
+
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "state.php" ? "active" : "" ?>">
+                  <a href="state.php" class="menu-link">
                     <div data-i18n="course">State Master</div>
-                    </a>
-                  </li>
-                         
-                  <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="city.php"?"active":"" ?>">
-                    <a href="city.php" class="menu-link">
+                  </a>
+                </li>
+
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "city.php" ? "active" : "" ?>">
+                  <a href="city.php" class="menu-link">
                     <div data-i18n="course">City Master</div>
-                    </a>
-                  </li>
+                  </a>
+                </li>
 
-                  <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="zone.php"?"active":"" ?>">
-                    <a href="zone.php" class="menu-link">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "zone.php" ? "active" : "" ?>">
+                  <a href="zone.php" class="menu-link">
                     <div data-i18n="course">Zone Master</div>
-                    </a>
-                  </li>
+                  </a>
+                </li>
 
-                  <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="area.php"?"active":"" ?>">
-                    <a href="area.php" class="menu-link">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "area.php" ? "active" : "" ?>">
+                  <a href="area.php" class="menu-link">
                     <div data-i18n="course">Area Master</div>
-                    </a>
-                  </li>
+                  </a>
+                </li>
               </ul>
             </li>
 
-            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]),$delivery)?"active open":"" ?> ">
+            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]), $delivery) ? "active open" : "" ?> ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-package"></i>
                 <div data-i18n="Form Elements">Delivery Settings</div>
               </a>
               <ul class="menu-sub">
-                
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="deliveryboy_reg.php"?"active":"" ?>">
-                      <a href="deliveryboy_reg.php" class="menu-link">
-                      <div data-i18n="course">Delivery Boy Registration</div>
-                      </a>
-                    </li>
 
-                    <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="delivery_settings.php"?"active":"" ?>">
-                      <a href="delivery_settings.php" class="menu-link">
-                      <div data-i18n="course">Delivery Master</div>
-                      </a>
-                    </li>
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "deliveryboy_reg.php" ? "active" : "" ?>">
+                  <a href="deliveryboy_reg.php" class="menu-link">
+                    <div data-i18n="course">Delivery Boy Registration</div>
+                  </a>
+                </li>
 
-                    <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="collection_time.php"?"active":"" ?>">
-                      <a href="collection_time.php" class="menu-link">
-                      <div data-i18n="course">Collection Time</div>
-                      </a>
-                    </li>
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "delivery_settings.php" ? "active" : "" ?>">
+                  <a href="delivery_settings.php" class="menu-link">
+                    <div data-i18n="course">Delivery Master</div>
+                  </a>
+                </li>
+
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "collection_time.php" ? "active" : "" ?>">
+                  <a href="collection_time.php" class="menu-link">
+                    <div data-i18n="course">Collection Time</div>
+                  </a>
+                </li>
               </ul>
             </li>
 
-            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]),$coupon)?"active open":"" ?> ">
+            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]), $coupon) ? "active open" : "" ?> ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-coupon"></i>
                 <div data-i18n="Form Elements">Coupon Settings</div>
               </a>
               <ul class="menu-sub">
-                
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="coupon.php"?"active":"" ?>">
-                    <a href="coupon.php" class="menu-link">
+
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "coupon.php" ? "active" : "" ?>">
+                  <a href="coupon.php" class="menu-link">
                     <div data-i18n="course">Coupon Master</div>
-                    </a>
-                  </li>
-                  <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="coupon_counter.php"?"active":"" ?>">
-                    <a href="coupon_counter.php" class="menu-link">
+                  </a>
+                </li>
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "coupon_counter.php" ? "active" : "" ?>">
+                  <a href="coupon_counter.php" class="menu-link">
                     <div data-i18n="course">Coupon Counter</div>
-                    </a>
-                  </li>
+                  </a>
+                </li>
               </ul>
             </li>
 
-            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]),$mail)?"active open":"" ?> ">
+            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]), $mail) ? "active open" : "" ?> ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-envelope"></i>
                 <div data-i18n="Form Elements">Mail Settings</div>
               </a>
               <ul class="menu-sub">
-                
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="mail_type.php"?"active":"" ?>">
-                    <a href="mail_type.php" class="menu-link">
+
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "mail_type.php" ? "active" : "" ?>">
+                  <a href="mail_type.php" class="menu-link">
                     <div data-i18n="course">Mail Type</div>
-                    </a>
-                  </li>
-                  <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="mail_type_tariff.php"?"active":"" ?>">
-                    <a href="mail_type_tariff.php" class="menu-link">
+                  </a>
+                </li>
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "mail_type_tariff.php" ? "active" : "" ?>">
+                  <a href="mail_type_tariff.php" class="menu-link">
                     <div data-i18n="course">Mail Type Tariff</div>
-                    </a>
-                  </li>
+                  </a>
+                </li>
               </ul>
             </li>
 
 
-            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]),$review_feedback)?"active open":"" ?> ">
+            <li
+              class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]), $review_feedback) ? "active open" : "" ?> ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-star"></i>
                 <div data-i18n="Form Elements">Review/Feedback</div>
               </a>
               <ul class="menu-sub">
-                 <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="post_review.php"?"active":"" ?>">
-                      <a href="post_review.php" class="menu-link">
-                      <div data-i18n="course">Post Review</div>
-                      </a>
-                    </li>
-                  <!-- <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="customer_feedback.php"?"active":"" ?>">
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "post_review.php" ? "active" : "" ?>">
+                  <a href="post_review.php" class="menu-link">
+                    <div data-i18n="course">Post Review</div>
+                  </a>
+                </li>
+                <!-- <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "customer_feedback.php" ? "active" : "" ?>">
                       <a href="customer_feedback.php" class="menu-link">
                       <div data-i18n="course">Customer Feedback</div>
                       </a>
                     </li> -->
-                
-                
+
+
               </ul>
             </li>
 
-            
-            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]),$reportmenu)?"active open":"" ?> ">
+
+            <li class="menu-item  <?php echo in_array(basename($_SERVER["PHP_SELF"]), $reportmenu) ? "active open" : "" ?> ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-report"></i>
                 <div data-i18n="Form Elements">Reports</div>
               </a>
               <ul class="menu-sub">
-                
-                
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="customer_report.php"?"active":"" ?>">
+
+
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "customer_report.php" ? "active" : "" ?>">
                   <a href="customer_report.php" class="menu-link">
-                  <div data-i18n="course">Post Job Report</div>
-                  </a>
-                </li>
-                
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="cust_report.php"?"active":"" ?>">
-                  <a href="cust_report.php" class="menu-link">
-                  <div data-i18n="course">Customer Report</div>
-                  </a>
-                </li>
-                
-                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"])=="delivery_boy_report.php"?"active":"" ?>">
-                  <a href="delivery_boy_report.php" class="menu-link">
-                  <div data-i18n="course">Delivery Boy Report</div>
+                    <div data-i18n="course">Post Job Report</div>
                   </a>
                 </li>
 
-                
-                
+                <li class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "cust_report.php" ? "active" : "" ?>">
+                  <a href="cust_report.php" class="menu-link">
+                    <div data-i18n="course">Customer Report</div>
+                  </a>
+                </li>
+
+                <li
+                  class="menu-item <?php echo basename($_SERVER["PHP_SELF"]) == "delivery_boy_report.php" ? "active" : "" ?>">
+                  <a href="delivery_boy_report.php" class="menu-link">
+                    <div data-i18n="course">Delivery Boy Report</div>
+                  </a>
+                </li>
+
+
+
 
               </ul>
             </li>
-            
-           
+
+
           </ul>
         </aside>
         <!-- / Menu -->
@@ -575,7 +559,9 @@ $page_name = basename($_SERVER['PHP_SELF']);
         <div class="layout-page">
           <!-- Navbar -->
 
-          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar">
             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
               <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                 <i class="bx bx-menu bx-sm"></i>
@@ -583,13 +569,13 @@ $page_name = basename($_SERVER['PHP_SELF']);
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              
+
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
-                
 
-              
+
+
                 <!-- <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar">
@@ -601,28 +587,30 @@ $page_name = basename($_SERVER['PHP_SELF']);
                   </ul>
                 </li> -->
                 <!-- Notification -->
-          <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
-            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" >
-              <i class="bx bx-bell bx-sm"></i>
-              <span class="badge bg-danger rounded-pill badge-notifications" id="noti_count"></span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end py-0">
-              <li class="dropdown-menu-header border-bottom" id="notif_header" style="display:none">
-                <div class="dropdown-header d-flex align-items-center py-3">
-                  <h5 class="text-body mb-0 me-auto">Notification</h5>
-                  <a href="javascript:mark_read_all()" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read">Read All</a>
-                </div>
-              </li>
-              <li class="dropdown-notifications-list scrollable-container">
-                <ul class="list-group list-group-flush" id="notification_list">
-                 
-                </ul>
-              </li>
-              
-            </ul>
-          </li>
-          <!--/ Notification -->
-             
+                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="noti_count"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end py-0">
+                    <li class="dropdown-menu-header border-bottom" id="notif_header" style="display:none">
+                      <div class="dropdown-header d-flex align-items-center py-3">
+                        <h5 class="text-body mb-0 me-auto">Notification</h5>
+                        <a href="javascript:mark_read_all()" class="dropdown-notifications-all text-body"
+                          data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read">Read All</a>
+                      </div>
+                    </li>
+                    <li class="dropdown-notifications-list scrollable-container">
+                      <ul class="list-group list-group-flush" id="notification_list">
+
+                      </ul>
+                    </li>
+
+                  </ul>
+                </li>
+                <!--/ Notification -->
+
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -631,15 +619,15 @@ $page_name = basename($_SERVER['PHP_SELF']);
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
-                    
+
                     <li>
                       <a class="dropdown-item" href="editProfile.php">
                         <i class="bx bx-user me-2"></i>
-                        <span class="align-middle"><?php echo ucfirst($_SESSION["username"])?></span>
+                        <span class="align-middle"><?php echo ucfirst($_SESSION["username"]) ?></span>
                       </a>
                     </li>
-                   
-                    
+
+
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
@@ -661,7 +649,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
                     </li>
                   </ul>
                 </li>
-              <!-- / User -->
+                <!-- / User -->
               </ul>
             </div>
           </nav>

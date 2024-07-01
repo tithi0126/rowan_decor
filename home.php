@@ -1,100 +1,96 @@
 <?php
-include("header.php");
+include ("header.php");
 
 $todays_date = date('Y-m-d');
 
-$date=isset($_COOKIE["dash_date"])?$_COOKIE['dash_date']:date('Y-m-d');
-setcookie("selected_date", $date,time()+3600,"/");
+$date = isset($_COOKIE["dash_date"]) ? $_COOKIE['dash_date'] : date('Y-m-d');
+setcookie("selected_date", $date, time() + 3600, "/");
 
 // total customers
-$stmt_list1 = $obj->con1->prepare("select * from customer_reg where `status`='enable'");
-$stmt_list1->execute();
-$total_cust = $stmt_list1->get_result()->num_rows;	
-$stmt_list1->close();
+// $stmt_list1 = $obj->con1->prepare("select * from customer_reg where `status`='enable'");
+// $stmt_list1->execute();
+// $total_cust = $stmt_list1->get_result()->num_rows;	
+// $stmt_list1->close();
 
-// today's new customers
-$stmt_list2 = $obj->con1->prepare("select * from customer_reg where `status`='enable' and dt like '%".$date."%'");
-$stmt_list2->execute();
-$todays_cust = $stmt_list2->get_result()->num_rows;	
-$stmt_list2->close();
+// // today's new customers
+// $stmt_list2 = $obj->con1->prepare("select * from customer_reg where `status`='enable' and dt like '%".$date."%'");
+// $stmt_list2->execute();
+// $todays_cust = $stmt_list2->get_result()->num_rows;	
+// $stmt_list2->close();
 
-// today's dispatch
-$stmt_list3 = $obj->con1->prepare("select * from post where dispatch_date='".$date."'");
-$stmt_list3->execute();
-$todays_dispatch = $stmt_list3->get_result()->num_rows;	
-$stmt_list3->close();
+// // today's dispatch
+// $stmt_list3 = $obj->con1->prepare("select * from post where dispatch_date='".$date."'");
+// $stmt_list3->execute();
+// $todays_dispatch = $stmt_list3->get_result()->num_rows;	
+// $stmt_list3->close();
 
-// total delivery boy
-$stmt_list4 = $obj->con1->prepare("select * from delivery_boy where status='enable'");
-$stmt_list4->execute();
-$total_deli_boy = $stmt_list4->get_result()->num_rows;	
-$stmt_list4->close();
+// // total delivery boy
+// $stmt_list4 = $obj->con1->prepare("select * from delivery_boy where status='enable'");
+// $stmt_list4->execute();
+// $total_deli_boy = $stmt_list4->get_result()->num_rows;	
+// $stmt_list4->close();
 
-// today's new delivery boy
-$stmt_list5 = $obj->con1->prepare("select * from delivery_boy where status='enable' and dt like '%".$date."%'");
-$stmt_list5->execute();
-$todays_deli_boy = $stmt_list5->get_result()->num_rows;
-$stmt_list5->close();
+// // today's new delivery boy
+// $stmt_list5 = $obj->con1->prepare("select * from delivery_boy where status='enable' and dt like '%".$date."%'");
+// $stmt_list5->execute();
+// $todays_deli_boy = $stmt_list5->get_result()->num_rows;
+// $stmt_list5->close();
 
-// upcoming post
+// // upcoming post
 
-$stmt_list6 = $obj->con1->prepare("select * from post where cast(dispatch_date as date)>'".$date."'");
-$stmt_list6->execute();
-$upcoming_post = $stmt_list6->get_result()->num_rows;	
-$stmt_list6->close();
+// $stmt_list6 = $obj->con1->prepare("select * from post where cast(dispatch_date as date)>'".$date."'");
+// $stmt_list6->execute();
+// $upcoming_post = $stmt_list6->get_result()->num_rows;	
+// $stmt_list6->close();
 
-// today's post
-$stmt_list7 = $obj->con1->prepare("select * from post where order_date like '%".$date."%'");
-$stmt_list7->execute();
-$todays_post = $stmt_list7->get_result()->num_rows;	
-$stmt_list7->close();
+// // today's post
+// $stmt_list7 = $obj->con1->prepare("select * from post where order_date like '%".$date."%'");
+// $stmt_list7->execute();
+// $todays_post = $stmt_list7->get_result()->num_rows;	
+// $stmt_list7->close();
 
-// today's transit
-$stmt_list8 = $obj->con1->prepare("select * from post where post_status='transit' and collection_date='".$date."'");
-$stmt_list8->execute();
-$todays_transit = $stmt_list8->get_result()->num_rows; 
-$stmt_list8->close();
+// // today's transit
+// $stmt_list8 = $obj->con1->prepare("select * from post where post_status='transit' and collection_date='".$date."'");
+// $stmt_list8->execute();
+// $todays_transit = $stmt_list8->get_result()->num_rows; 
+// $stmt_list8->close();
 ?>
 <div class="row">
-	<div class="col-lg-12 mb-4 order-0">
-		<div class="card">
-			<div class="d-flex align-items-end row">
-			  <div class="col-sm-7">
-			    <div class="card-body">
-			      <h5 class="card-title text-primary">Welcome Admin</h5>
-			      <!-- <p class="mb-4">
-			        You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-			        your profile.
-			      </p> -->
+  <div class="col-lg-12 mb-4 order-0">
+    <div class="card">
+      <div class="d-flex align-items-end row">
+        <div class="col-sm-7">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Welcome Admin</h5>
+            <!-- <p class="mb-4">
+              You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
+              your profile.
+            </p> -->
 
-			      <!-- <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a> -->
-			    </div>
-			  </div>
-			  <div class="col-sm-5 text-center text-sm-left">
-			    <div class="card-body pb-0 px-0 px-md-4">
-			      <img
-			        src="assets/img/illustrations/man-with-laptop-light.png"
-			        height="140"
-			        alt="View Badge User"
-			        data-app-dark-img="illustrations/man-with-laptop-dark.png"
-			        data-app-light-img="illustrations/man-with-laptop-light.png"
-			      />
-			    </div>
-			  </div>
-			</div>
-		</div>
-	</div>
+            <!-- <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a> -->
+          </div>
+        </div>
+        <div class="col-sm-5 text-center text-sm-left">
+          <div class="card-body pb-0 px-0 px-md-4">
+            <img src="assets/img/illustrations/man-with-laptop-light.png" height="140" alt="View Badge User"
+              data-app-dark-img="illustrations/man-with-laptop-dark.png"
+              data-app-light-img="illustrations/man-with-laptop-light.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
- 
 
 
-<div class="row">
+
+<!-- <div class="row">
   <div class="navbar-nav-right d-flex align-items-center mb-3" id="navbar-collapse">
     <div class="navbar-nav align-items-center">
       <div class="nav-item d-flex align-items-center">
       <!--  <i class="bx bx-calendar fs-4 lh-0"></i>  -->
-        <form method="post" id="dashboard_frm">
-        <input type="date" class="form-control border-0 shadow-none" name="dash_date" id="dash_date" onchange="get_dashboard_data(this.value)" value="<?php echo isset($_COOKIE['dash_date'])?$_COOKIE['dash_date']:date('Y-m-d')?>">
+<!-- <form method="post" id="dashboard_frm">
+        <input type="date" class="form-control border-0 shadow-none" name="dash_date" id="dash_date" onchange="get_dashboard_data(this.value)" value="<?php echo isset($_COOKIE['dash_date']) ? $_COOKIE['dash_date'] : date('Y-m-d') ?>">
         <input type="submit" name="dash_submit" class="d-none">
       </form>
       </div>
@@ -102,7 +98,7 @@ $stmt_list8->close();
   </div>
     <div class="col-lg-12 col-md-12 order-1">
       <div class="row">
-      	<div class="col-lg-3 col-md-12 col-6 mb-4">
+        <div class="col-lg-3 col-md-12 col-6 mb-4">
           <div class="card">
             <div class="card-body">
               <div class="card-title d-flex align-items-start justify-content-between">
@@ -129,12 +125,12 @@ $stmt_list8->close();
                   </div>
                 </div>
               </div>
-      <?php if($todays_date==$date){ ?>
+      <?php if ($todays_date == $date) { ?>
               <span class="fw-semibold d-block mb-1">Today's Post</span>
-      <?php } else{ ?>
-              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y',strtotime($date)) ?> 's Post</span>
+      <?php } else { ?>
+              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y', strtotime($date)) ?> 's Post</span>
       <?php } ?>
-              <h3 class="card-title mb-2"><?php echo $todays_post?></h3>
+              <h3 class="card-title mb-2"><?php echo $todays_post ?></h3>
               
             </div>
           </div>
@@ -167,7 +163,7 @@ $stmt_list8->close();
                 </div>
               </div>
               <span class="fw-semibold d-block mb-1">Upcoming Post</span>
-              <h3 class="card-title mb-2"><?php echo $upcoming_post?></h3>
+              <h3 class="card-title mb-2"><?php echo $upcoming_post ?></h3>
               
             </div>
           </div>
@@ -198,10 +194,10 @@ $stmt_list8->close();
                   </div>
                 </div>
               </div>
-        <?php if($todays_date==$date){ ?>
+        <?php if ($todays_date == $date) { ?>
               <span class="fw-semibold d-block mb-1">Today's Transit</span>
-        <?php } else{ ?>
-              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y',strtotime($date)) ?> 's Transit</span>
+        <?php } else { ?>
+              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y', strtotime($date)) ?> 's Transit</span>
         <?php } ?>
               <h3 class="card-title mb-2"><?php echo $todays_transit ?></h3>
               
@@ -234,12 +230,12 @@ $stmt_list8->close();
                   </div>
                 </div>
               </div>
-        <?php if($todays_date==$date){ ?>
+        <?php if ($todays_date == $date) { ?>
               <span class="fw-semibold d-block mb-1">Today's Dispatch</span>
-        <?php } else{ ?>
-              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y',strtotime($date)) ?> 's Dispatch</span>
+        <?php } else { ?>
+              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y', strtotime($date)) ?> 's Dispatch</span>
         <?php } ?>
-              <h3 class="card-title mb-2"><?php echo $todays_dispatch?></h3>
+              <h3 class="card-title mb-2"><?php echo $todays_dispatch ?></h3>
               
             </div>
           </div>
@@ -271,13 +267,13 @@ $stmt_list8->close();
                 </div>
               </div>
               <span class="fw-semibold d-block mb-1">Total Customers</span>
-              <h3 class="card-title mb-2"><?php echo $total_cust?></h3>
+              <h3 class="card-title mb-2"><?php echo $total_cust ?></h3>
               
             </div>
           </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-12 col-6 mb-4">
+        </div> -->
+
+<!-- <div class="col-lg-3 col-md-12 col-6 mb-4">
           <div class="card">
             <div class="card-body">
               <div class="card-title d-flex align-items-start justify-content-between">
@@ -295,11 +291,11 @@ $stmt_list8->close();
                   </div>
                 </div>
               </div>
-        <?php if($todays_date==$date){ ?>
+        <?php if ($todays_date == $date) { ?>
               <span class="fw-semibold d-block mb-1">Today's New Customers</span>
-        <?php } else{ ?>
-              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y',strtotime($date)) ?> 's New Customers</span>
-        <?php } ?><h3 class="card-title  mb-2"><?php echo $todays_cust?></h3>        
+        <?php } else { ?>
+              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y', strtotime($date)) ?> 's New Customers</span>
+        <?php } ?><h3 class="card-title  mb-2"><?php echo $todays_cust ?></h3>        
             </div>
           </div>
         </div>
@@ -330,7 +326,7 @@ $stmt_list8->close();
                 </div>
               </div>
               <span class="fw-semibold d-block mb-1">Total Delivery Boy</span>
-              <h3 class="card-title mb-2"><?php echo $total_deli_boy?></h3>
+              <h3 class="card-title mb-2"><?php echo $total_deli_boy ?></h3>
               
             </div>
           </div>
@@ -361,12 +357,12 @@ $stmt_list8->close();
                   </div>
                 </div>
               </div>
-        <?php if($todays_date==$date){ ?>
+        <?php if ($todays_date == $date) { ?>
               <span class="fw-semibold d-block mb-1">Today's New Delivery Boy</span>
-        <?php } else{ ?>
-              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y',strtotime($date)) ?> 's New Delivery Boy</span>
+        <?php } else { ?>
+              <span class="fw-semibold d-block mb-1"><?php echo date('d-m-Y', strtotime($date)) ?> 's New Delivery Boy</span>
         <?php } ?>
-              <h3 class="card-title mb-2"><?php echo $todays_deli_boy?></h3>
+              <h3 class="card-title mb-2"><?php echo $todays_deli_boy ?></h3>
               
             </div>
           </div>
@@ -375,17 +371,17 @@ $stmt_list8->close();
 
       </div>
     </div>
-</div>    
+</div>     -->
 
 
 <script type="text/javascript">
   // Use datepicker on the date inputs
-/*$("#dash_date").datepicker({
-  dateFormat: 'dd-mm-yyyy',
-  onSelect: function(dateText, inst) {
-    $(inst).val(dateText); // Write the value in the input
-  }
-});*/
+  /*$("#dash_date").datepicker({
+    dateFormat: 'dd-mm-yyyy',
+    onSelect: function(dateText, inst) {
+      $(inst).val(dateText); // Write the value in the input
+    }
+  });*/
 
 
 
@@ -394,6 +390,6 @@ $stmt_list8->close();
 
 
 
-<?php 
-include("footer.php");
+<?php
+include ("footer.php");
 ?>

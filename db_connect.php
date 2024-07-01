@@ -12,7 +12,7 @@ class DB_Connect {
     // Connecting to database
     public function connect() {
        
-		$con = mysqli_connect("localhost","root","","mykapot") or die("Connection Failed...!");
+		$con = mysqli_connect("localhost","root","","rowan_db") or die("Connection Failed...!");
 		// $con = mysqli_connect("localhost","root","","rowan_db") or die("Connection Failed...!");
 		
 		if (!$con)
